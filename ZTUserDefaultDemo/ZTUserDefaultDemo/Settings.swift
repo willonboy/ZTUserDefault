@@ -12,7 +12,7 @@ class Settings: ObservableObject {
     @UserDefaultOptional(key: "version")
     static var ver:Int?
     
-    @UserDefault(key: "name", defaultValue: "")
+    @UserDefault(key: "name", defaultValue: "刘大")
     static var name
     
     @UserDefaultOptional(key: "school")
