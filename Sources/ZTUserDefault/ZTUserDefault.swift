@@ -12,14 +12,14 @@ protocol ZTCoding : Codable {}
 
 
 @propertyWrapper
-class UserDefault<T: Codable> {
+public class UserDefault<T: Codable> {
     private let key: String
     private let userDefaults: UserDefaults
 
     @Published private var value: T
     private var cancellables = Set<AnyCancellable>()
 
-    init(key: String, defaultValue: T, userDefaults: UserDefaults = .standard) {
+    public init(key: String, defaultValue: T, userDefaults: UserDefaults = .standard) {
         self.key = key
         self.userDefaults = userDefaults
         self.value = Self.getValue(forKey: key, userDefaults: userDefaults) ?? defaultValue
@@ -36,12 +36,12 @@ class UserDefault<T: Codable> {
             .store(in: &cancellables)
     }
 
-    var wrappedValue: T {
+    public var wrappedValue: T {
         get { value }
         set { value = newValue }
     }
 
-    var projectedValue: Published<T>.Publisher {
+    public var projectedValue: Published<T>.Publisher {
         $value
     }
 
@@ -59,14 +59,14 @@ class UserDefault<T: Codable> {
 
 
 @propertyWrapper
-class UserDefaultOptional<T: Codable> {
+public class UserDefaultOptional<T: Codable> {
     private let key: String
     private let userDefaults: UserDefaults
 
     @Published private var value: T?
     private var cancellables = Set<AnyCancellable>()
 
-    init(key: String, defaultValue: T? = nil, userDefaults: UserDefaults = .standard) {
+    public init(key: String, defaultValue: T? = nil, userDefaults: UserDefaults = .standard) {
         self.key = key
         self.userDefaults = userDefaults
         self.value = Self.getValue(forKey: key, userDefaults: userDefaults) ?? defaultValue
@@ -87,12 +87,12 @@ class UserDefaultOptional<T: Codable> {
             .store(in: &cancellables)
     }
 
-    var wrappedValue: T? {
+    public var wrappedValue: T? {
         get { value }
         set { value = newValue }
     }
 
-    var projectedValue: Published<T?>.Publisher {
+    public var projectedValue: Published<T?>.Publisher {
         $value
     }
 
