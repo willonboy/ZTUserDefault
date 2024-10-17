@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = 'ZTUserDefault'
   s.version          = '1.0.0'
-  s.summary          = 'ZTUserDefault is a lightweight Swift library that provides a powerful and convenient way to manage UserDefaults with support for reactive programming using Combine. The library simplifies the process of storing, retrieving, and observing changes to UserDefaults, while supporting custom Codable types.'
+  s.summary          = 'A lightweight Swift library that provides convenient way to manage UserDefaults with support for reactive programming using Combine. '
 
   s.description      = <<-DESC
                         ZTUserDefault is a lightweight Swift library that provides a powerful and convenient way to manage UserDefaults with support for reactive programming using Combine. The library simplifies the process of storing, retrieving, and observing changes to UserDefaults, while supporting custom Codable types.
