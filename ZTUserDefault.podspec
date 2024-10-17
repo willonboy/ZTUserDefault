@@ -15,7 +15,8 @@ Pod::Spec.new do |s|
   s.source_files = 'Sources/**/*.{swift,h,m}'
   s.exclude_files = 'Sources/Exclude'
 
-  s.platforms = { :ios => '13.0', :macos => '10.15' }
+  # s.platforms = { :ios => '13.0', :macos => '10.15' }
+  s.platforms = { :ios => '13.0' }
 
   s.swift_version = '5.2'
 
