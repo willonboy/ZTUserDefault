@@ -19,5 +19,5 @@ let package = Package(
             name: "ZTUserDefault",
             dependencies: []),
     ],
-    swiftLanguageVersions: [.v5_2]
+    swiftLanguageVersions: [.version("5.2")]
 )
