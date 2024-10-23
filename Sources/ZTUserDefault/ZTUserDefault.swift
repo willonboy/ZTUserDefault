@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-protocol ZTCoding : Codable {}
+public protocol ZTCoding : Codable {}
 
 
 @propertyWrapper
