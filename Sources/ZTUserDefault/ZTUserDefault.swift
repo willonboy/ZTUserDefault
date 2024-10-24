@@ -9,6 +9,9 @@ import Foundation
 import Combine
 
 public protocol ZTCoding : Codable {}
+extension Dictionary : ZTCoding where Key:Codable, Value:Codable {}
+extension Array: ZTCoding where Element: Codable {}
+extension Set: ZTCoding where Element: Codable {}
 
 
 @propertyWrapper

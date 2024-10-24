@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'ZTUserDefault'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'A lightweight Swift library that provides convenient way to manage UserDefaults with support for reactive programming using Combine. '
 
   s.description      = <<-DESC
