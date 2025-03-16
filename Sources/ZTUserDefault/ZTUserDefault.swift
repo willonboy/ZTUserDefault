@@ -14,7 +14,7 @@ extension Array: ZTCoding where Element: Codable {}
 extension Set: ZTCoding where Element: Codable {}
 
 
-public var ZTUserDefaultDebug:Bool = true
+public var ZTUserDefaultDebug:Bool = false
 
 @propertyWrapper
 public class UserDefault<T: Codable & Equatable> {
