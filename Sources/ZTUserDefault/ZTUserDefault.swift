@@ -14,8 +14,10 @@ extension Array: ZTCoding where Element: Codable {}
 extension Set: ZTCoding where Element: Codable {}
 
 
+public var ZTUserDefaultDebug:Bool = true
+
 @propertyWrapper
-public class UserDefault<T: Codable> {
+public class UserDefault<T: Codable & Equatable> {
     private let key: String
     private let userDefaults: UserDefaults
 
@@ -26,8 +28,12 @@ public class UserDefault<T: Codable> {
         self.key = key
         self.userDefaults = userDefaults
         self.value = Self.getValue(forKey: key, userDefaults: userDefaults) ?? defaultValue
-
-        $value
+#if DEBUG
+        if ZTUserDefaultDebug {
+            print("[ZTUserDefault] get \(key):\(value)")
+        }
+#endif
+        $value.removeDuplicates()
             .sink { newValue in
                 if T.self is ZTCoding.Type {
                     let encodedValue = try? JSONEncoder().encode(newValue)
@@ -35,6 +41,12 @@ public class UserDefault<T: Codable> {
                 } else {
                     userDefaults.set(newValue, forKey: key)
                 }
+                userDefaults.synchronize()
+#if DEBUG
+                if ZTUserDefaultDebug {
+                    print("[ZTUserDefault] set \(key):\(newValue)")
+                }
+#endif
             }
             .store(in: &cancellables)
     }
@@ -44,6 +56,7 @@ public class UserDefault<T: Codable> {
         set { value = newValue }
     }
 
+    /// NOTION! 通过$value 监听值时，回调被调用时wrappedValue的值并没有变更，相当于will change时机
     public var projectedValue: Published<T>.Publisher {
         $value
     }
@@ -62,7 +75,7 @@ public class UserDefault<T: Codable> {
 
 
 @propertyWrapper
-public class UserDefaultOptional<T: Codable> {
+public class UserDefaultOptional<T: Codable & Equatable> {
     private let key: String
     private let userDefaults: UserDefaults
 
@@ -74,7 +87,12 @@ public class UserDefaultOptional<T: Codable> {
         self.userDefaults = userDefaults
         self.value = Self.getValue(forKey: key, userDefaults: userDefaults) ?? defaultValue
 
-        $value
+#if DEBUG
+        if ZTUserDefaultDebug {
+            print("[ZTUserDefault] get \(key):\(value ?? defaultValue)")
+        }
+#endif
+        $value.removeDuplicates()
             .sink { [weak self] newValue in
                 if let value = newValue {
                     if T.self is ZTCoding.Type {
@@ -86,6 +104,12 @@ public class UserDefaultOptional<T: Codable> {
                 } else {
                     self?.userDefaults.removeObject(forKey: key)
                 }
+                self?.userDefaults.synchronize()
+#if DEBUG
+                if ZTUserDefaultDebug {
+                    print("[ZTUserDefault] set \(key):\(newValue)")
+                }
+#endif
             }
             .store(in: &cancellables)
     }
@@ -94,7 +118,8 @@ public class UserDefaultOptional<T: Codable> {
         get { value }
         set { value = newValue }
     }
-
+    
+    /// NOTION! 通过$value 监听值时，回调被调用时wrappedValue的值并没有变更，相当于will change时机
     public var projectedValue: Published<T?>.Publisher {
         $value
     }
