@@ -7,12 +7,11 @@
 
 import Foundation
 
-
-class Settings: ObservableObject {
+class Settings {
     @UserDefaultOptional(key: "version")
     static var ver:Int?
     
-    @UserDefault(key: "name", defaultValue: "刘大")
+    @UserDefault(key: "name", defaultValue: "Jack")
     static var name
     
     @UserDefaultOptional(key: "school")
@@ -30,7 +29,7 @@ class Settings: ObservableObject {
         self.school = s
         
         self.ver = 203
-        self.name = "this is name"
+        self.name = "Tom"
     }
     
     static func update2() {
@@ -44,40 +43,29 @@ class Settings: ObservableObject {
         let s = School(name: "小圣贤庄2", students: sts, teachers: ts)
         self.school = s
         
-        self.ver = 2032
-        self.name = "this is name2"
+        self.ver = 204
+        self.name = "Jerry"
     }
 }
 
-class School : ObservableObject, ZTCoding {
+struct School : Equatable, ZTCoding, CustomStringConvertible {
+    var description: String {
+        "\(name): \(students): \(teachers)"
+    }
+    
     var name: String
     var students: [Student]
     var teachers: [Teacher]
-    
-    init(name:String, students: [Student], teachers:[Teacher]) {
-        self.name = name
-        self.students = students
-        self.teachers = teachers
-    }
 }
 
-class Teacher : ZTCoding {
+struct Teacher : ZTCoding, Equatable {
     var name:String
     var age: Int
     var category:String
-    init(name: String, age: Int, category: String) {
-        self.name = name
-        self.age = age
-        self.category = category
-    }
 }
 
-class Student : ZTCoding {
+struct Student : ZTCoding, Equatable {
     var name:String
     var age: Int
-    init(name: String, age: Int) {
-        self.name = name
-        self.age = age
-    }
 }
 
