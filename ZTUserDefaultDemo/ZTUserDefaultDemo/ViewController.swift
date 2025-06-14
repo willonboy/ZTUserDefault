@@ -13,7 +13,7 @@ class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+
         print("before \(Settings.name)")
         Settings.update()
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()+5, execute: DispatchWorkItem(block: {
@@ -21,11 +21,13 @@ class ViewController: UIViewController {
         }))
         
         Settings.$name.sink { name in
-            print("\(name)")
+            print("Print name: \(name)")
+        }
+        .store(in: &cancellables)
+        
+        Settings.$school.sink { s in
+            print("Print school: \(s?.description ?? "")")
         }
         .store(in: &cancellables)
     }
-
-
 }
-
